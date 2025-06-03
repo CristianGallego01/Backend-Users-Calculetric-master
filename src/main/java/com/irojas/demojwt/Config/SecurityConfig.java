@@ -54,7 +54,10 @@ public class SecurityConfig {
         config.setAllowCredentials(true);
 
         // Asegúrate de que coincida con tu frontend exacto
-        config.setAllowedOrigins(List.of("http://localhost:5173"));
+     config.setAllowedOrigins(List.of(
+        "http://localhost:5173", 
+        "https://calculetric.vercel.app"
+        ));
 
         // Métodos permitidos
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
