@@ -55,7 +55,6 @@ public class SecurityConfig {
 
         // Asegúrate de que coincida con tu frontend exacto
      config.setAllowedOrigins(List.of(
-        "http://localhost:5173", 
         "https://calculetric.vercel.app"
         ));
 
