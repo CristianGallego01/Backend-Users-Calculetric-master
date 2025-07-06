@@ -2,6 +2,7 @@ package com.irojas.demojwt.User;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder; // ✅ Inyectamos el codificador de contraseñas
 
     public List<UserDTO> listarUsuarios() {
         List<User> usuarios = userRepository.findAll();
@@ -24,6 +26,7 @@ public class UserService {
                 ))
                 .toList();
     }
+
     public String eliminarUsuario(Integer id) {
         if (!userRepository.existsById(id)) {
             throw new RuntimeException("El usuario con ID: " + id + " no existe");
@@ -41,6 +44,11 @@ public class UserService {
         user.setFirstname(request.getFirstname());
         user.setLastname(request.getLastname());
         user.setCountry(request.getCountry());
+
+        // ✅ Codifica y actualiza la contraseña solo si viene en el request
+        if (request.getPassword() != null && !request.getPassword().isBlank()) {
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+        }
 
         userRepository.save(user);
 
